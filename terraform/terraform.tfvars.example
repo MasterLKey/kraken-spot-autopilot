@@ -1,0 +1,13 @@
+# Copy to terraform.tfvars and fill in values.
+# terraform.tfvars is gitignored — never commit it.
+
+proxmox_host      = "192.168.4.223"
+proxmox_node      = "pm01"
+storage           = "local-lvm"
+container_id      = 202
+
+proxmox_api_token = "root@pam!cursor=YOUR-TOKEN-UUID-HERE"
+
+ssh_public_key = "ssh-ed25519 AAAA... octo-scrape"
+
+root_password = "choose-a-strong-password"

@@ -1,0 +1,16 @@
+services:
+  bot:
+    build: .
+    container_name: kraken-spot-autopilot
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      DATA_DIR: /app/data
+      KILL_SWITCH_FILE: /app/data/KILL
+    volumes:
+      - bot_data:/app/data
+    # No ports — bot polls Kraken and optionally posts to Telegram
+
+volumes:
+  bot_data:
