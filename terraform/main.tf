@@ -15,12 +15,9 @@ provider "proxmox" {
   insecure  = true
 }
 
-resource "proxmox_virtual_environment_download_file" "ubuntu_2404" {
-  node_name    = var.proxmox_node
-  content_type = "vztmpl"
-  datastore_id = "local"
-  url          = "http://download.proxmox.com/images/system/ubuntu-24.04-standard_24.04-2_amd64.tar.zst"
-  overwrite    = false
+# Template already present on the node (shared with other LXCs).
+locals {
+  ubuntu_template = "local:vztmpl/ubuntu-24.04-standard_24.04-2_amd64.tar.zst"
 }
 
 resource "proxmox_virtual_environment_container" "crypto_bot" {
@@ -34,11 +31,9 @@ resource "proxmox_virtual_environment_container" "crypto_bot" {
   unprivileged  = true
 
   operating_system {
-    template_file_id = proxmox_virtual_environment_download_file.ubuntu_2404.id
+    template_file_id = local.ubuntu_template
     type             = "ubuntu"
   }
-
-  depends_on = [proxmox_virtual_environment_download_file.ubuntu_2404]
 
   cpu {
     cores = 1
